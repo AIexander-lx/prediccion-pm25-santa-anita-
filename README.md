@@ -40,7 +40,9 @@ python -m pip install -r requirements.txt
 jupyter lab
 ```
 
-Abrir `notebooks/01_eda.ipynb` y ejecutar todas las celdas en orden. Las rutas funcionan desde la raíz del repositorio o desde `notebooks/`. La ejecución actualiza las tablas en `data/processed/` y siete figuras en `figures/`, cada una en PNG de 300 dpi y PDF vectorial. La primera celda registra las versiones utilizadas.
+Abrir `notebooks/01_eda.ipynb` y ejecutar todas las celdas en orden. Las rutas funcionan desde la raíz del repositorio o desde `notebooks/`. La ejecución actualiza las tablas en `data/processed/` y diez figuras en `figures/`, cada una en PNG de 300 dpi y PDF vectorial. La primera celda registra las versiones utilizadas.
+
+Las tres figuras complementarias describen la disponibilidad, los promedios mensuales y la correlación simultánea de PM10, PM2.5 y NO2. El objetivo predictivo sigue siendo PM2.5 una hora después. La correlación entre contaminantes no se interpreta como evidencia de desempeño predictivo.
 
 El EDA no imputa faltantes, no elimina valores extremos y no entrena modelos. Se exploró todo el periodo seleccionado; esta exposición debe documentarse al definir la evaluación temporal de P2.
 

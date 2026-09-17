@@ -11,8 +11,11 @@ Generadas por `notebooks/01_eda.ipynb`. Cada figura está disponible en PNG (300
 5. **05_patrones_calendario — Patrones horarios y semanales.** Mediana de PM2.5 por hora y día de la semana. La banda representa los percentiles 25 y 75 de las observaciones, no un intervalo de confianza. Las diferencias no demuestran una mejora predictiva.
 6. **06_resumen_mensual — Complementaria.** Media y mediana mensual de las concentraciones disponibles. Interpretar junto con la cobertura de cada mes.
 7. **07_horas_consecutivas — Complementaria.** Distribución conjunta de PM2.5 en horas consecutivas con ambas mediciones disponibles. El color representa el número de pares en escala logarítmica y la diagonal indica igualdad de concentraciones.
+8. **08_faltantes_contaminantes — Calidad de datos, complementaria.** Porcentaje mensual de horas sin medición para PM10, PM2.5 y NO2. El eje horizontal muestra meses reales y la escala de color representa faltantes, no concentraciones.
+9. **09_promedios_mensuales_contaminantes — Contexto, complementaria.** Media mensual de cada contaminante calculada sobre sus mediciones disponibles. Los paneles tienen escalas verticales propias y se interpretan junto con la cobertura mensual.
+10. **10_correlacion_contaminantes — Contexto, complementaria.** Correlación de Pearson entre contaminantes medidos en la misma hora. Cada par utiliza las horas compartidas con medición; no describe la relación con el valor de la hora siguiente.
 
-Las primeras cinco figuras cubren los puntos centrales del EDA. No es necesario incluir todas si el espacio del informe es limitado.
+Las primeras cinco figuras cubren los puntos centrales del EDA. Las figuras 8 a 10 permiten incorporar el contexto de los otros contaminantes sin desplazar el análisis de PM2.5. No es necesario incluirlas todas si el espacio del informe es limitado.
 
 ## Ejemplo en LaTeX
 
