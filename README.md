@@ -4,13 +4,13 @@ Proyecto del curso de Machine Learning para predecir la concentración de PM2.5 
 
 ## Estado
 
-Estructura inicial del repositorio. El análisis exploratorio, el modelado y el informe están pendientes de desarrollo.
+EDA de la primera entrega desarrollado en la notebook, con tablas y gráficos exportados. El modelado corresponde a la segunda entrega. La unidad de concentración debe confirmarse con el proveedor antes de cerrar el informe.
 
 ## Organización
 
 - `data/raw/`: CSV de Santa Anita, conservado sin modificaciones.
-- `data/processed/`: datos preparados que se generen durante el análisis.
-- `notebooks/01_eda.ipynb`: notebook base para el EDA, todavía sin análisis.
+- `data/processed/`: tablas de cobertura, calidad, estadísticas y patrones temporales.
+- `notebooks/01_eda.ipynb`: EDA ejecutado con resultados e interpretaciones.
 - `figures/`: gráficos exportados para el informe.
 - `report/`: archivos LaTeX, referencias y PDF del informe.
 - `slides/`: presentación del proyecto.
@@ -22,7 +22,7 @@ Fuente: SENAMHI, conjunto [Monitoreo de los contaminantes del aire en Lima Metro
 
 Licencia indicada por el proveedor: Open Data Commons Attribution License. Esta atribución corresponde a los datos; no establece una licencia para el código del proyecto.
 
-El archivo `data/raw/santa_anita_2015_2024.csv` es una copia sin cambios del CSV filtrado por estación proporcionado por el equipo. Contiene registros desde enero de 2015 hasta mayo de 2024. El periodo de estudio será del 1 de enero de 2022 al 30 de abril de 2024; el filtro se implementará en la notebook, conservando el archivo de entrada.
+El archivo `data/raw/santa_anita_2015_2024.csv` es una copia sin cambios del CSV filtrado por estación proporcionado por el equipo. Contiene registros desde enero de 2015 hasta mayo de 2024. La notebook selecciona del 1 de enero de 2022 al 30 de abril de 2024, conservando el archivo de entrada y las horas sin medición.
 
 ## Preparación del entorno
 
@@ -40,7 +40,11 @@ python -m pip install -r requirements.txt
 jupyter lab
 ```
 
-Abrir `notebooks/01_eda.ipynb`. Por ahora solo contiene la estructura de trabajo, sin resultados.
+Abrir `notebooks/01_eda.ipynb` y ejecutar todas las celdas en orden. Las rutas funcionan desde la raíz del repositorio o desde `notebooks/`. La ejecución actualiza las tablas en `data/processed/` y siete figuras en `figures/`, cada una en PNG de 300 dpi y PDF vectorial. La primera celda registra las versiones utilizadas.
+
+El EDA no imputa faltantes, no elimina valores extremos y no entrena modelos. Se exploró todo el periodo seleccionado; esta exposición debe documentarse al definir la evaluación temporal de P2.
+
+Consultar `figures/README.md` para elegir las figuras y sus pies de imagen.
 
 ## Informe y presentación
 
