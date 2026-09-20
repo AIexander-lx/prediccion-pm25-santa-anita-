@@ -1,0 +1,20 @@
+[project]
+name = "prediccion-pm25-santa-anita"
+version = "0.1.0"
+description = "Predicción de PM2.5 a una hora en la estación Santa Anita (SENAMHI) — proyecto final del curso de Machine Learning, UTEC"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+
+# Las tres primeras están fijadas a la versión exacta con la que se ejecutó
+# notebooks/01_eda.ipynb, para que las cifras y figuras del informe se
+# reproduzcan idénticas. El resto queda acotado por rango y con versión
+# exacta en uv.lock.
+dependencies = [
+    "pandas==3.0.1",
+    "numpy==2.5.3",
+    "matplotlib==3.11.2",
+    "seaborn>=0.13,<0.14",
+    "scikit-learn>=1.7,<2.0",
+    "jupyterlab>=4.4,<5.0",
+    "ipykernel>=6.30,<7.0",
+]
