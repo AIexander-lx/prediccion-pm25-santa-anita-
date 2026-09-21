@@ -31,8 +31,6 @@ EDA de la primera entrega desarrollado en la notebook, con tablas y gráficos ex
 - `data/processed/`: tablas de cobertura, calidad, estadísticas, patrones temporales y decisiones de diseño experimental.
 - `notebooks/01_eda.ipynb`: EDA ejecutado con resultados e interpretaciones.
 - `figures/`: gráficos exportados para el informe.
-- `report/`: archivos LaTeX, referencias y PDF del informe.
-- `slides/`: presentación del proyecto.
 - `pyproject.toml`: dependencias declaradas del proyecto.
 - `uv.lock`: versiones exactas de todas las dependencias.
 - `requirements.txt`: exportación del bloqueo de versiones, para quien use pip.
@@ -87,6 +85,3 @@ El EDA no imputa faltantes, no elimina valores extremos y no entrena modelos. Se
 
 Las figuras complementarias describen la disponibilidad, los promedios mensuales y la correlación simultánea de PM10, PM2.5 y NO2. El objetivo predictivo sigue siendo PM2.5 una hora después: la correlación entre contaminantes no se interpreta como evidencia de desempeño predictivo. Consultar `figures/README.md` para elegir las figuras y sus pies de imagen.
 
-## Informe y presentación
-
-El informe se edita en Prism usando la plantilla IEEE del curso. Las versiones del LaTeX y del PDF se guardan en `report/`, y la presentación en `slides/`.
