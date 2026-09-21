@@ -19,6 +19,8 @@ La primera entrega no las responde: reúne la evidencia descriptiva necesaria pa
 - León Pantaleón, Jobeth Alexander
 - Huamán Huamaní, Josué Yeremi
 
+Repositorio del proyecto: https://github.com/AIexander-lx/prediccion-pm25-santa-anita-
+
 ## Estado
 
 EDA de la primera entrega desarrollado en la notebook, con tablas y gráficos exportados. El modelado corresponde a la segunda entrega. Las concentraciones están en µg/m³, unidad confirmada con el informe de vigilancia de la calidad del aire de SENAMHI para el Área Metropolitana de Lima y Callao (2021).
@@ -87,4 +89,4 @@ Las figuras complementarias describen la disponibilidad, los promedios mensuales
 
 ## Informe y presentación
 
-El informe se editará en Prism usando la plantilla IEEE del curso. Guardar las versiones del LaTeX y del PDF en `report/`, y la presentación en `slides/`. El archivo `report/main.tex` es únicamente un marcador inicial, no la plantilla definitiva.
+El informe se edita en Prism usando la plantilla IEEE del curso. Las versiones del LaTeX y del PDF se guardan en `report/`, y la presentación en `slides/`.
