@@ -2,6 +2,8 @@
 
 Proyecto del curso de Machine Learning para predecir la concentración de PM2.5 de la siguiente hora en la estación Santa Anita de SENAMHI.
 
+Repositorio del proyecto: https://github.com/AIexander-lx/prediccion-pm25-santa-anita-
+
 ## Estado
 
 EDA de la primera entrega desarrollado en la notebook, con tablas y gráficos exportados. El modelado corresponde a la segunda entrega. La unidad de concentración debe confirmarse con el proveedor antes de cerrar el informe.
@@ -50,4 +52,4 @@ Consultar `figures/README.md` para elegir las figuras y sus pies de imagen.
 
 ## Informe y presentación
 
-El informe se editará en Prism usando la plantilla IEEE del curso. Guardar las versiones del LaTeX y del PDF en `report/`, y la presentación en `slides/`. El archivo `report/main.tex` es únicamente un marcador inicial, no la plantilla definitiva.
+El informe se edita en Prism usando la plantilla IEEE del curso. Las versiones del LaTeX y del PDF se guardan en `report/`, y la presentación en `slides/`.
