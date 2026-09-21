@@ -6,7 +6,7 @@ La estación pertenece a la zona este de la red de monitoreo de Lima Metropolita
 
 ## Preguntas de investigación
 
-1. ¿Cuánto mejora un modelo de aprendizaje automático sobre la persistencia —usar la medición actual como pronóstico de la siguiente hora— en un horizonte de una hora?
+1. ¿Cuánto mejora un modelo de aprendizaje automático sobre la persistencia al usar la medición actual como pronóstico de la siguiente hora en un horizonte de una hora?
 2. ¿Aportan las variables de calendario (hora del día y día de la semana) por encima de lo que ya contiene el historial reciente de la propia serie?
 3. ¿Se degrada el desempeño en el régimen de concentraciones altas, que es el de mayor relevancia sanitaria?
 
