@@ -1,8 +1,8 @@
 ,valor
-Cobertura (%),94.94222483352918
-Duplicados fecha/hora,0.0
-Filas en el periodo,20424.0
 Horas esperadas,20424.0
+Filas en el periodo,20424.0
 Horas sin fila,0.0
 Mediciones PM2.5 disponibles,19391.0
 PM2.5 faltantes,1033.0
+Cobertura (%),94.94222483352918
+Duplicados fecha/hora,0.0
