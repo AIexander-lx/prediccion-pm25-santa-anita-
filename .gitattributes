@@ -1,0 +1,25 @@
+# Normaliza los fines de línea para que el repositorio no acumule diferencias
+# espurias entre Windows, macOS y Linux. Tras copiarlo a la raíz como
+# `.gitattributes`, ejecutar una sola vez:
+#
+#     git add --renormalize .
+#     git status
+#
+# y commitear el resultado si aparece algo.
+
+* text=auto eol=lf
+
+# Archivos binarios: git no debe tocarlos.
+*.png binary
+*.pdf binary
+
+# La notebook es JSON y debe conservar LF.
+*.ipynb text eol=lf
+
+# Datos y configuración.
+*.csv  text eol=lf
+*.toml text eol=lf
+*.lock text eol=lf
+*.md   text eol=lf
+*.tex  text eol=lf
+*.bib  text eol=lf

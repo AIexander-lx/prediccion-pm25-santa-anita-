@@ -1,6 +1,6 @@
 ,tipo_conceptual,uso,tipo_en_python,valores_distintos_periodo
 ID,Identificador,Excluir,int64,20424
-ESTACION,Categórica,Contexto: una estación,object,1
+ESTACION,Categórica,Contexto: una estación,str,1
 FECHA,Temporal,Combinar con HORA,string,851
 HORA,Temporal,Combinar con FECHA,string,24
 LONGITUD,Numérica,Ubicación,float64,1
@@ -9,8 +9,8 @@ ALTITUD,Numérica,Ubicación,int64,1
 PM10,Numérica continua,Descriptiva,float64,6573
 PM2_5,Numérica continua,Historial y respuesta futura,float64,5683
 NO2,Numérica continua,Descriptiva,float64,1350
-DEPARTAMENTO,Categórica,Contexto,object,1
-PROVINCIA,Categórica,Contexto,object,1
-DISTRITO,Categórica,Contexto,object,1
+DEPARTAMENTO,Categórica,Contexto,str,1
+PROVINCIA,Categórica,Contexto,str,1
+DISTRITO,Categórica,Contexto,str,1
 UBIGEO,Código,Contexto,string,1
 FECHA_CORTE,Temporal,Excluir: corte del archivo,int64,1
