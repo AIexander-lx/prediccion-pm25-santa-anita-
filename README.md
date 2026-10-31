@@ -80,7 +80,7 @@ Cuatro roles de carga similar. Cada rol tiene su código, sus secciones del pape
 
 | Rol | Responsable | Responsabilidades | Secciones del paper |
 |---|---|---|---|
-| **1. Datos y características** | _(asignar)_ | Construir el conjunto supervisado (rezagos, medias móviles solo con el pasado, hora y día); manejar faltantes y ventanas incompletas sin fuga; aplicar la partición cronológica; escalado dentro del pipeline; actualizar el EDA que pasa al paper. | 3 (actualizada) y 4 |
+| **1. Datos y características** | Alexander | Construir el conjunto supervisado (rezagos, medias móviles solo con el pasado, hora y día); manejar faltantes y ventanas incompletas sin fuga; aplicar la partición cronológica; escalado dentro del pipeline; actualizar el EDA que pasa al paper. | 3 (actualizada) y 4 |
 | **2. Baseline y modelos lineales** | _(asignar)_ | Baseline de persistencia; Ridge y Lasso; validación temporal y búsqueda de hiperparámetros; definir y justificar las métricas (MAE, RMSE, R², MSE); protocolo experimental. | 5 (baseline y lineales) y 6 |
 | **3. Modelos no lineales y análisis de errores** | _(asignar)_ | Random Forest y, si se decide, boosting; ajuste de hiperparámetros; comparación con el baseline y los lineales; importancia de variables; análisis de errores y del régimen de concentraciones altas; respuesta a las tres preguntas de investigación. | 5 (no lineales) y 7 |
 | **4. Reporte, repositorio y presentación** | _(asignar)_ | Armar el paper en IEEE (hasta 12 páginas); redactar resumen, introducción, discusión, limitaciones, ética, conclusiones y referencias; mantener el repo reproducible (README, dependencias, notebooks); armar la presentación de 10 minutos y coordinar el ensayo. | 1, 2, 8, 9 y 10 |
