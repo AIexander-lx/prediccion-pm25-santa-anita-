@@ -106,13 +106,13 @@ Marca cada tarea con `[x]` cuando esté lista y sube el cambio. Cada rol trabaja
 - [x] Actualizar el EDA para el paper (sección 3) y redactar la sección 4.
 
 #### Rol 2: Baseline y modelos lineales
-- [ ] Implementar el baseline de persistencia y calcular sus métricas en validación.
-- [ ] Definir y justificar las métricas (MAE, RMSE, MSE, R²) y fijar la forma de comparar con el baseline.
-- [ ] Implementar Ridge y Lasso con los rezagos y las variables de calendario.
-- [ ] Ajustar `alpha` con validación temporal (no aleatoria) y registrar la búsqueda.
-- [ ] Comparar con y sin variables de calendario para la pregunta de investigación 2.
-- [ ] Interpretar los coeficientes (cuáles quedan en cero en Lasso).
-- [ ] Redactar las secciones 5 (baseline y lineales) y 6.
+- [x] Implementar el baseline de persistencia y calcular sus métricas en validación.
+- [x] Definir y justificar las métricas (MAE, RMSE, MSE, R²) y fijar la forma de comparar con el baseline.
+- [x] Implementar Ridge y Lasso con los rezagos y las variables de calendario.
+- [x] Ajustar `alpha` con validación temporal (no aleatoria) y registrar la búsqueda.
+- [x] Comparar con y sin variables de calendario para la pregunta de investigación 2.
+- [x] Interpretar los coeficientes (cuáles quedan en cero en Lasso).
+- [x] Redactar las secciones 5 (baseline y lineales) y 6.
 
 #### Rol 3: Modelos no lineales y análisis de errores
 - [ ] Implementar Random Forest sobre el mismo conjunto de características.
@@ -193,6 +193,20 @@ uv export --no-hashes --no-dev --no-emit-project -o requirements.txt
 ```
 
 ## Reproducir el análisis
+
+### Experimento de baseline y modelos lineales (P2)
+
+Tras preparar el entorno, ejecutar desde la raíz:
+
+```powershell
+uv run python scripts/01_construir_dataset.py
+uv run python scripts/02_verificar_fuga.py
+uv run python scripts/04_modelos_lineales.py
+```
+
+El último script evalúa persistencia, Ridge y Lasso en las mismas filas. Ajusta `alpha` por MAE mediante tres ventanas de validación temporal expansivas dentro de entrenamiento; el escalador se ajusta dentro de cada ventana. Compara las variantes con y sin calendario en validación y elige el modelo lineal con menor MAE; evalúa ese modelo y la persistencia en prueba sin reajustar con validación. Por tanto, prueba no debe usarse para volver a seleccionar modelos. Los resultados y predicciones se guardan en `data/processed/lineales_*.csv`; el detalle del protocolo y la interpretación están en `paper/seccion_5_baseline_lineales.tex` y `paper/seccion_6_diseno_experimental.tex`. El uso previo de todo el periodo en el EDA limita la independencia estricta de prueba, como se declara en la sección 6.
+
+### Análisis exploratorio (P1)
 
 Con el entorno listo, abrir `notebooks/01_eda.ipynb` y ejecutar todas las celdas en orden. Las rutas funcionan desde la raíz del repositorio o desde `notebooks/`. La ejecución tarda menos de un minuto y actualiza treinta tablas en `data/processed/` y trece figuras en `figures/`, cada una en PNG de 300 dpi y PDF vectorial. La primera celda registra las versiones utilizadas y fija la semilla global; la última verifica por hash que el CSV de entrada no fue modificado.
 

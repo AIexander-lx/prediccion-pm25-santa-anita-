@@ -1,5 +1,9 @@
 # Entornos y cachés
 .venv/
+.localdeps/
+.uvtool/
+.uvpython/
+.uvcache/
 venv/
 __pycache__/
 *.py[cod]
