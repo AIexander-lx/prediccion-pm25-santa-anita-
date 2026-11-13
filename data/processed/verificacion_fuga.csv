@@ -1,0 +1,13 @@
+comprobacion,resultado,detalle
+Recálculo independiente con solo el pasado (500 filas al azar),OK,0 discrepancias en 4500 valores
+Las entradas en t no cambian si se altera el futuro (8 cortes),OK,0 cortes con diferencias
+Respuesta = PM2.5(t+1) con separación exacta de 1 hora,OK,valores y fechas coinciden en todas las filas
+Hora y día de la semana corresponden al instante pronosticado (t+1),OK,coinciden en todas las filas
+"Partición cronológica sin filas sin asignar, sin solapes y en orden",OK,"sin asignar=0, solapes=0, orden=True"
+Ninguna fila usa información posterior al final de su bloque,OK,el último t de cada bloque es anterior a su corte
+"Sin NaN ni infinitos, y sin ceros inventados",OK,"ceros en la serie=0, ceros en pm25_t=0"
+"Toda fila con hueco en entradas o respuesta queda excluida, y solo esas",OK,2148 filas excluidas = 2148 con hueco
+Escalador ajustado solo con entrenamiento (calendario=False),OK,"media pm25_t entrenamiento=32.940, con todo=28.981"
+Escalador ajustado solo con entrenamiento (calendario=True),OK,"media pm25_t entrenamiento=32.940, con todo=28.981"
+Codificación del calendario: 9 de historial + 2 (hora) + 6 (día) = 17 columnas,OK,"pm25_t, pm25_lag1, pm25_lag3, pm25_lag6, pm25_lag12, pm25_lag24, pm25_media3h, pm25_media6h, pm25_media24h, hora_objetivo_sin, hora_objetivo_cos, dia_semana_objetivo_1, dia_semana_objetivo_2, dia_semana_objetivo_3, dia_semana_objetivo_4, dia_semana_objetivo_5, dia_semana_objetivo_6"
+Control negativo: una entrada con fuga deliberada sí es detectada por la prueba 2,OK,la columna con shift(-1) cambia al alterar el futuro
