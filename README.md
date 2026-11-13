@@ -96,14 +96,14 @@ Cuatro roles de carga similar. Cada rol tiene su código, sus secciones del pape
 Marca cada tarea con `[x]` cuando esté lista y sube el cambio. Cada rol trabaja en su propia rama (por ejemplo `p2-rol1-datos`) y se integra a `main` con un pull request revisado por otro integrante.
 
 #### Rol 1: Datos y características
-- [ ] Definir el conjunto supervisado: entrada hasta `t`, etiqueta `PM2.5(t+1)`.
-- [ ] Construir los rezagos (1, 3, 6, 12 y 24 horas) y las medias móviles usando solo información pasada.
-- [ ] Construir las variables de calendario (hora del día y día de la semana) y decidir su codificación.
-- [ ] Decidir qué hacer con faltantes y ventanas incompletas, sin imputar con ceros ni usar información futura.
-- [ ] Aplicar la partición cronológica (entrenamiento, validación, prueba) y guardarla.
-- [ ] Implementar el preprocesamiento (escalado, etc.) ajustado solo con entrenamiento, dentro de un pipeline.
-- [ ] Verificar la ausencia de fuga de información con una comprobación explícita.
-- [ ] Actualizar el EDA para el paper (sección 3) y redactar la sección 4.
+- [x] Definir el conjunto supervisado: entrada hasta `t`, etiqueta `PM2.5(t+1)`.
+- [x] Construir los rezagos (1, 3, 6, 12 y 24 horas) y las medias móviles usando solo información pasada.
+- [x] Construir las variables de calendario (hora del día y día de la semana) y decidir su codificación.
+- [x] Decidir qué hacer con faltantes y ventanas incompletas, sin imputar con ceros ni usar información futura.
+- [x] Aplicar la partición cronológica (entrenamiento, validación, prueba) y guardarla.
+- [x] Implementar el preprocesamiento (escalado, etc.) ajustado solo con entrenamiento, dentro de un pipeline.
+- [x] Verificar la ausencia de fuga de información con una comprobación explícita.
+- [x] Actualizar el EDA para el paper (sección 3) y redactar la sección 4.
 
 #### Rol 2: Baseline y modelos lineales
 - [ ] Implementar el baseline de persistencia y calcular sus métricas en validación.
