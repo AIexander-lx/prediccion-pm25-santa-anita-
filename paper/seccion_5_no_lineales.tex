@@ -1,0 +1,36 @@
+% Rol 3. Subsecciones a continuación de seccion_5_baseline_lineales (misma \section).
+% Insertar con \input{seccion_5_no_lineales}. Requiere booktabs.
+% Cifras: data/processed/no_lineales_*.csv (scripts/05_modelos_no_lineales.py).
+\subsection{Modelos no lineales basados en árboles}
+\label{sec:no-lineales}
+Los modelos lineales suponen que cada variable aporta de forma aditiva y con el mismo coeficiente en cualquier nivel de concentración. Para relajar ese supuesto se incluyen dos conjuntos de árboles de regresión, que aprenden umbrales e interacciones (por ejemplo, entre la hora y el nivel reciente) sin especificarlos de antemano.
+
+\textbf{Random Forest} promedia árboles profundos entrenados sobre muestras bootstrap; en cada división solo se considera una fracción aleatoria \texttt{max\_features} de las variables, lo que reduce la correlación entre árboles y, con ello, la varianza del promedio. El tamaño mínimo de hoja \texttt{min\_samples\_leaf} controla cuánto se suaviza la predicción. \textbf{HistGradientBoosting} (HistGB), la implementación de \emph{gradient boosting} de scikit-learn~\cite{pedregosa2011sklearn}, añade árboles pequeños de forma secuencial, cada uno ajustado al gradiente de la pérdida cuadrática del conjunto anterior y escalado por la tasa de aprendizaje; discretiza las variables en histogramas para acelerar la búsqueda de cortes. Es la misma familia que XGBoost y LightGBM, usada en trabajos previos con datos de SENAMHI~\cite{oblitas2024xgboost,chen2016xgboost}, y no añade dependencias al proyecto. Su parada temprana se desactiva porque separa una validación interna aleatoria, no cronológica.
+
+Ambos modelos reciben exactamente las entradas de la sección~\ref{sec:preproc} y el mismo preprocesador que los lineales; la estandarización no altera los cortes de un árbol, pero mantenerla garantiza entradas idénticas. Se ajustan con los mismos tres cortes de origen expansivo, el mismo criterio (MAE medio de las tres ventanas) y la misma evaluación descritos en la sección~6, con y sin calendario y semilla fija. La Tabla~\ref{tab:mallas} resume las mallas y los valores elegidos. Las variantes con calendario obtienen menor MAE de validación cruzada (4,819 frente a 4,964 en Random Forest y 4,889 frente a 5,010 en HistGB) y también en validación, que es el criterio de selección, por lo que son las elegidas en cada familia. Los valores elegidos de \texttt{max\_features}, \texttt{min\_samples\_leaf}, \texttt{learning\_rate}, \texttt{max\_iter} y \texttt{max\_leaf\_nodes} son interiores a su malla; la malla de HistGB se amplió tras una primera búsqueda en la que \texttt{max\_iter} y \texttt{min\_samples\_leaf} quedaban en el borde. \texttt{n\_estimators} toma el mayor valor probado, pero 200 y 500 árboles difieren en menos de 0,01 de MAE, y \texttt{l2\_regularization} elige 0, es decir, sin penalización adicional. Ambos prefieren hojas grandes (20 y 100 observaciones), es decir, predicciones suavizadas.
+
+\begin{table}[t]
+\centering
+\caption{Mallas de hiperparámetros y valores elegidos por MAE de validación temporal (variantes con calendario).}
+\label{tab:mallas}
+\small
+\begin{tabular}{@{}llr@{}}
+\toprule
+Hiperparámetro & Valores probados & Elegido \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Random Forest} (30 combinaciones)} \\
+\texttt{n\_estimators} & 200, 500 & 500 \\
+\texttt{max\_features} & 0,33; 0,6; 1,0 & 0,6 \\
+\texttt{min\_samples\_leaf} & 1, 5, 20, 50, 100 & 20 \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{HistGB} (216 combinaciones)} \\
+\texttt{learning\_rate} & 0,02; 0,05; 0,1 & 0,05 \\
+\texttt{max\_iter} & 50, 100, 300, 600 & 100 \\
+\texttt{max\_leaf\_nodes} & 7, 15, 31 & 15 \\
+\texttt{min\_samples\_leaf} & 20, 100, 300 & 100 \\
+\texttt{l2\_regularization} & 0; 1 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A diferencia del rol lineal, en el que solo el mejor modelo pasó a prueba, aquí se evalúa en prueba el elegido de cada familia, para comparar familias en el periodo final. La elección de hiperparámetros, de la variante y de cada representante se hizo solo con entrenamiento y validación; prueba no se usa para escoger entre ellos. Un límite común a ambos métodos es que su predicción es un promedio de valores observados en las hojas: no pueden pronosticar concentraciones por encima de las vistas en entrenamiento y, con hojas grandes, tienden a atenuar los picos (sección~\ref{sec:regimen-alto}).

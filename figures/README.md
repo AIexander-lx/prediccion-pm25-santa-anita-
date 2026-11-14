@@ -23,6 +23,15 @@ Generadas por `notebooks/01_eda.ipynb`. Cada figura está disponible en PNG (300
 
 Las ocho primeras cubren los puntos centrales del EDA. Las cinco restantes aportan contexto y pueden omitirse si el espacio del informe es limitado.
 
+## Figuras de la segunda entrega: modelos no lineales y análisis de errores
+
+Generadas por `scripts/06_analisis_errores.py` y usadas en la sección 7 del paper (`paper/seccion_7_resultados.tex`). Comparan persistencia, Ridge sin calendario y los Random Forest y HistGradientBoosting con calendario sobre las mismas filas de validación y prueba.
+
+14. **15_comparacion_modelos — Comparación global.** MAE por modelo en validación y prueba, con la reducción porcentual frente a la persistencia del mismo bloque.
+15. **16_importancia_variables — Importancia por permutación.** Aumento del MAE de validación al permutar cada variable (media y desviación de 20 repeticiones). Con variables correlacionadas subestima a las que tienen sustitutas; no es una medida causal.
+16. **17_errores_hora_mes — Errores por hora y por mes.** MAE por hora pronosticada en validación y por mes en validación y prueba. Las diferencias entre meses reflejan también el cambio de nivel de las concentraciones.
+17. **18_errores_por_nivel — Régimen alto.** MAE y sesgo medio por nivel de PM2.5 observado en t+1. Los cortes (15, 25, 37,5, 50 y 75 µg/m³) son las guías diarias de la OMS y el ECA, usados solo para agrupar horas; el último tramo tiene cuatro horas por bloque. Agrupar por el valor observado induce parte del sesgo negativo.
+
 ## Ejemplo en LaTeX
 
 Subir a Prism el PDF de la figura, conservando la carpeta `figures/`, y colocar lo siguiente en el apartado correspondiente:

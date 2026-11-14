@@ -115,13 +115,13 @@ Marca cada tarea con `[x]` cuando esté lista y sube el cambio. Cada rol trabaja
 - [x] Redactar las secciones 5 (baseline y lineales) y 6.
 
 #### Rol 3: Modelos no lineales y análisis de errores
-- [ ] Implementar Random Forest sobre el mismo conjunto de características.
-- [ ] Ajustar hiperparámetros con validación temporal (por ejemplo `n_estimators`, `max_features`, `min_samples_leaf`).
-- [ ] Decidir si se prueba un segundo modelo no lineal (por ejemplo boosting) y comparar.
-- [ ] Calcular la importancia de variables e interpretarla (incluyendo sus limitaciones).
-- [ ] Analizar los errores: dónde falla el modelo, por hora, mes y nivel de concentración.
-- [ ] Evaluar el desempeño en el régimen de concentraciones altas (pregunta 3).
-- [ ] Redactar las secciones 5 (no lineales) y 7, con tablas y figuras comparativas.
+- [x] Implementar Random Forest sobre el mismo conjunto de características.
+- [x] Ajustar hiperparámetros con validación temporal (por ejemplo `n_estimators`, `max_features`, `min_samples_leaf`).
+- [x] Decidir si se prueba un segundo modelo no lineal (por ejemplo boosting) y comparar.
+- [x] Calcular la importancia de variables e interpretarla (incluyendo sus limitaciones).
+- [x] Analizar los errores: dónde falla el modelo, por hora, mes y nivel de concentración.
+- [x] Evaluar el desempeño en el régimen de concentraciones altas (pregunta 3).
+- [x] Redactar las secciones 5 (no lineales) y 7, con tablas y figuras comparativas.
 
 #### Rol 4: Reporte, repositorio y presentación
 - [ ] Configurar el paper con el template IEEE (LaTeX o Word) y respetar el límite de 12 páginas.
@@ -205,6 +205,19 @@ uv run python scripts/04_modelos_lineales.py
 ```
 
 El último script evalúa persistencia, Ridge y Lasso en las mismas filas. Ajusta `alpha` por MAE mediante tres ventanas de validación temporal expansivas dentro de entrenamiento; el escalador se ajusta dentro de cada ventana. Compara las variantes con y sin calendario en validación y elige el modelo lineal con menor MAE; evalúa ese modelo y la persistencia en prueba sin reajustar con validación. Por tanto, prueba no debe usarse para volver a seleccionar modelos. Los resultados y predicciones se guardan en `data/processed/lineales_*.csv`; el detalle del protocolo y la interpretación están en `paper/seccion_5_baseline_lineales.tex` y `paper/seccion_6_diseno_experimental.tex`. El uso previo de todo el periodo en el EDA limita la independencia estricta de prueba, como se declara en la sección 6.
+
+### Experimento de modelos no lineales y análisis de errores (P2)
+
+Después de los tres scripts anteriores:
+
+```powershell
+uv run python scripts/05_modelos_no_lineales.py
+uv run python scripts/06_analisis_errores.py
+```
+
+`05_modelos_no_lineales.py` ajusta Random Forest y HistGradientBoosting (scikit-learn) con y sin calendario, sobre las mismas características, los mismos tres cortes de validación temporal y el mismo criterio (MAE) que el script 04; comprueba que los cortes coinciden con `lineales_folds.csv`. En cada familia elige la variante con menor MAE de validación y la evalúa en prueba sin reajustar. Calcula además la importancia por permutación en validación. Tarda unos 15 minutos con dos núcleos y guarda `data/processed/no_lineales_*.csv`.
+
+`06_analisis_errores.py` no reentrena: lee las predicciones de los scripts 04 y 05, verifica que todos los modelos se evalúan en las mismas filas y desagrega los errores por hora, mes y nivel de concentración. Evalúa el régimen alto con dos definiciones (umbral fijo igual al percentil 90 de la respuesta en entrenamiento y decil superior de cada bloque) e incluye intervalos de confianza por bootstrap de bloques móviles de 24 filas. Guarda `data/processed/errores_*.csv` y las figuras 15 a 18. La redacción está en `paper/seccion_5_no_lineales.tex` y `paper/seccion_7_resultados.tex`.
 
 ### Análisis exploratorio (P1)
 
