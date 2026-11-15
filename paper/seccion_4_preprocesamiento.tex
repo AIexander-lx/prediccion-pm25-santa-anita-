@@ -91,7 +91,7 @@ La Tabla~\ref{tab:part} y la Fig.~\ref{fig:part} muestran que la distribución d
 
 \subsection{Preprocesamiento dentro del pipeline y prevención de fuga}
 
-El escalado se ejecuta dentro de un \texttt{Pipeline} de scikit-learn: las nueve variables de historial se estandarizan con la media y la desviación del entrenamiento, y esos parámetros se aplican sin reajuste a validación y prueba. Ajustar el escalador con todos los datos filtraría información de los bloques posteriores: la media de $\mathrm{PM}_{2{,}5}(t)$ es de 32,94 en entrenamiento y de 28,98 en el conjunto completo.
+La fuga de información, es decir, que el modelo use durante el entrenamiento datos que no estarían disponibles al predecir, es una causa conocida de resultados optimistas~\cite{kaufman2012}. Para evitarla, el escalado se ejecuta dentro de un \texttt{Pipeline} de scikit-learn: las nueve variables de historial se estandarizan con la media y la desviación del entrenamiento, y esos parámetros se aplican sin reajuste a validación y prueba. Ajustar el escalador con todos los datos filtraría información de los bloques posteriores: la media de $\mathrm{PM}_{2{,}5}(t)$ es de 32,94 en entrenamiento y de 28,98 en el conjunto completo.
 
 La ausencia de fuga se comprueba de forma explícita con un guion reproducible (\texttt{scripts/02\_verificar\_fuga.py}) que ejecuta 12 verificaciones, todas superadas (Tabla~\ref{tab:fuga}). La prueba central altera por completo los valores posteriores a un instante de corte y comprueba que las entradas en ese instante no cambian. Como control negativo, se añade a propósito una variable con información futura y se confirma que la prueba la detecta.
 
