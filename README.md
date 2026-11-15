@@ -39,6 +39,7 @@ Tablas completas, intervalos de confianza y análisis de errores: sección de re
 
 ## Estructura del repositorio
 
+
 ```
 .
 ├── data/
@@ -55,6 +56,7 @@ Tablas completas, intervalos de confianza y análisis de errores: sección de re
 ├── uv.lock             versiones exactas
 └── requirements.txt    exportación del bloqueo, para quien use pip
 ```
+
 
 ## Datos
 
