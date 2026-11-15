@@ -1,0 +1,7 @@
+modelo,bloque,hiperparametros,n,MAE,RMSE,MSE,R2
+RandomForest_sin_calendario,validacion,"{'max_features': 0.6, 'min_samples_leaf': 20, 'n_estimators': 500}",4024,3.08329009,4.66599316,21.77149217,0.75320191
+RandomForest_con_calendario,validacion,"{'max_features': 0.6, 'min_samples_leaf': 20, 'n_estimators': 500}",4024,2.98541242,4.56500406,20.83926210,0.76376951
+HistGB_sin_calendario,validacion,"{'l2_regularization': 1.0, 'learning_rate': 0.05, 'max_iter': 100, 'max_leaf_nodes': 31, 'min_samples_leaf': 100}",4024,3.13174503,4.69175921,22.01260447,0.75046870
+HistGB_con_calendario,validacion,"{'l2_regularization': 0.0, 'learning_rate': 0.05, 'max_iter': 100, 'max_leaf_nodes': 15, 'min_samples_leaf': 100}",4024,3.05696946,4.61686477,21.31544029,0.75837164
+RandomForest_con_calendario,prueba,"{'max_features': 0.6, 'min_samples_leaf': 20, 'n_estimators': 500}",2701,2.41299495,4.48582081,20.12258831,0.73241675
+HistGB_con_calendario,prueba,"{'l2_regularization': 0.0, 'learning_rate': 0.05, 'max_iter': 100, 'max_leaf_nodes': 15, 'min_samples_leaf': 100}",2701,2.42783440,4.34655515,18.89254165,0.74877349

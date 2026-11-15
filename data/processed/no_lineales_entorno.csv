@@ -1,0 +1,2 @@
+python,numpy,pandas,scikit_learn,semilla,seleccion_RandomForest,seleccion_HistGB
+3.12.3,2.5.3,3.0.1,1.9.1,42,RandomForest_con_calendario,HistGB_con_calendario

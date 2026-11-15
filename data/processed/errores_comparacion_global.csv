@@ -1,0 +1,13 @@
+bloque,definicion,corte_ugm3,modelo,n,MAE,RMSE,sesgo,mejora_mae_vs_persistencia_pct,dif_mae_vs_persistencia,ic95_inf,ic95_sup,dif_mae_vs_ridge
+validacion,todas,,Persistencia,4024.000000,3.377520,5.142561,0.004804,0.000000,,,,
+validacion,todas,,Ridge,4024.000000,3.141334,4.754703,0.225462,6.992898,-0.236187,-0.288789,-0.183989,
+validacion,todas,,Random Forest,4024.000000,2.985412,4.565004,0.312297,11.609344,-0.392108,-0.466600,-0.321582,
+validacion,todas,,HistGB,4024.000000,3.056969,4.616865,0.242323,9.490717,-0.320551,-0.405245,-0.236615,
+validacion,todas,,Random Forest − Ridge,,,,,,,-0.217843,-0.097965,-0.155921
+validacion,todas,,HistGB − Ridge,,,,,,,-0.151293,-0.015597,-0.084364
+prueba,todas,,Persistencia,2701.000000,2.828947,5.264914,0.014070,0.000000,,,,
+prueba,todas,,Ridge,2701.000000,2.626263,4.765589,0.477138,7.164649,-0.202684,-0.272957,-0.131543,
+prueba,todas,,Random Forest,2701.000000,2.412995,4.485821,0.586107,14.703436,-0.415952,-0.514820,-0.309492,
+prueba,todas,,HistGB,2701.000000,2.427834,4.346555,0.643218,14.178879,-0.401113,-0.515079,-0.282704,
+prueba,todas,,Random Forest − Ridge,,,,,,,-0.281233,-0.145249,-0.213268
+prueba,todas,,HistGB − Ridge,,,,,,,-0.272324,-0.120126,-0.198429

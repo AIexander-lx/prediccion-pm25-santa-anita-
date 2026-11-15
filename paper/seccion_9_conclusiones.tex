@@ -1,0 +1,12 @@
+% Sección 9 de la guía: conclusiones. Rol 4.
+\section{Conclusiones}
+\label{sec:conclusiones}
+Se predijo la concentración horaria de PM$_{2{,}5}$ una hora adelante en la estación Santa Anita con una partición cronológica y control explícito de fuga de información. Las respuestas a las preguntas de investigación son las siguientes.
+
+\textbf{PI1.} Los modelos de árboles reducen el MAE de la persistencia en 9,5--11,6~\% en validación y alrededor de 14~\% en prueba (2,41 y 2,43 frente a 2,83~\textmu g/m\textsuperscript{3}), y Ridge en 7~\%. Los intervalos de la diferencia excluyen el cero, pero la ganancia es pequeña en términos absolutos.
+
+\textbf{PI2.} El calendario aporta solo a los árboles (2 a 3~\% en validación) y por medio de la hora del día; el día de la semana no aporta y en los modelos lineales el calendario empeora ligeramente el MAE. La hipótesis se confirma de forma parcial.
+
+\textbf{PI3.} Sí se degrada: en el decil superior el MAE es de dos a cuatro veces el del resto y por encima de 50~\textmu g/m\textsuperscript{3} todos los modelos subestiman. Los árboles conservan su ventaja relativa sobre la persistencia, pero ninguno resuelve la subestimación de los picos.
+
+En conjunto, el historial propio de la serie permite mejoras consistentes pero modestas a una hora, y no basta para anticipar los episodios de mayor relevancia sanitaria. Como trabajo futuro se propone incorporar variables meteorológicas, evaluar otras estaciones y horizontes más largos, probar modelos que atiendan la cola superior (pérdidas ponderadas o regresión cuantílica), explorar estrategias de imputación que no usen información futura y repetir la evaluación con más periodos para confirmar la estabilidad de los resultados.

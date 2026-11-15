@@ -1,0 +1,23 @@
+% Sección 2 de la guía (Introducción y formulación del problema). Rol 4.
+\section{Introducción y formulación del problema}
+\label{sec:intro}
+
+\subsection{Motivación}
+El material particulado fino PM$_{2{,}5}$, formado por partículas de diámetro aerodinámico menor o igual a 2,5~\textmu m, es uno de los indicadores más usados para estudiar la calidad del aire. Su exposición se asocia con efectos adversos sobre la salud, por lo que existen valores de referencia para el promedio de 24 horas: 50~\textmu g/m\textsuperscript{3} en el Estándar de Calidad Ambiental (ECA) peruano~\cite{minam_eca_2017} y 15~\textmu g/m\textsuperscript{3} en la guía de la OMS de 2021~\cite{who_aqg_2021}. En la estación Santa Anita, de la zona este de la red de SENAMHI en Lima Metropolitana~\cite{senamhi_vigilancia_2021}, el 93~\% de los días con cobertura suficiente entre 2022 y 2024 supera la guía de la OMS y el 10,3~\% el ECA, lo que da sentido a disponer de un pronóstico a corto plazo.
+
+Este trabajo predice la concentración de PM$_{2{,}5}$ de la \emph{siguiente hora} en esa estación a partir de su historial reciente. El pronóstico se compara con la persistencia, que supone que la siguiente hora será igual a la actual y es la referencia habitual en pronóstico~\cite{hyndman2021fpp3}. Además se estudia si la hora del día y el día de la semana aportan información por encima del historial, y qué ocurre con los errores cuando la concentración es alta.
+
+\subsection{Trabajos previos}
+La predicción de PM$_{2{,}5}$ en Lima ya se ha abordado con aprendizaje automático. Hoyos Cordova et al.~\cite{hoyos2021} predijeron la hora siguiente en cinco estaciones de SENAMHI con redes MLP y LSTM, y observaron que el desempeño empeora en los episodios críticos. Oblitas y Escobedo~\cite{oblitas2024xgboost} usaron XGBoost y LightGBM en San Borja y vieron que excluir variables relevantes reduce la precisión. Solis Teran et al.~\cite{solis2025} compararon nueve enfoques estadísticos y neuronales, y encontraron que modelos como ARIMA pueden superar a una LSTM cuando la serie tiene estacionalidad y pocas observaciones, de modo que no conviene suponer que el modelo más complejo será el mejor. No encontramos un estudio horario centrado en Santa Anita, por lo que este trabajo aporta evidencia sobre una estación de la zona este, con una persistencia como referencia, una evaluación que respeta el orden temporal~\cite{bergmeir2012} y un análisis de errores en los episodios altos.
+
+\subsection{Objetivo, tarea y preguntas de investigación}
+El objetivo es desarrollar y evaluar modelos que predigan la concentración de PM$_{2{,}5}$ una hora adelante en Santa Anita. Es una tarea de \emph{regresión supervisada}: la salida es un valor numérico y los registros históricos relacionan la información disponible en la hora $t$ con la concentración observada en $t+1$. Las preguntas de investigación son:
+\begin{itemize}
+\item \textbf{PI1.} ¿Cuánto mejora un modelo de aprendizaje automático sobre la persistencia como pronóstico a una hora?
+\item \textbf{PI2.} ¿Aportan la hora del día y el día de la semana por encima de lo que ya contiene el historial reciente de la serie?
+\item \textbf{PI3.} ¿Se degrada el desempeño en el régimen de concentraciones altas, el de mayor relevancia sanitaria?
+\end{itemize}
+La hipótesis de partida para PI2 es que el calendario puede representar patrones que el historial no captura por completo; el EDA solo muestra diferencias descriptivas, por lo que su utilidad debe comprobarse con la reducción del error en datos posteriores a los de entrenamiento. PI3 se apoya en lo observado por Hoyos Cordova et al.~\cite{hoyos2021}. Las conclusiones se limitan a esta estación y a este periodo.
+
+\subsection{Contribuciones y organización}
+El trabajo aporta (i)~un conjunto supervisado sin fuga de información, con comprobaciones explícitas, (ii)~una comparación de persistencia, Ridge, Lasso, Random Forest y HistGradientBoosting con ajuste por validación temporal, (iii)~una respuesta con intervalos de confianza a las tres preguntas y (iv)~un análisis de errores por hora, mes y nivel de concentración. El código, los datos procesados y las figuras están en el repositorio público\footnote{\url{https://github.com/AIexander-lx/prediccion-pm25-santa-anita-}}. La sección~\ref{sec:eda} describe los datos y el EDA; las secciones~\ref{sec:preproc} a~\ref{sec:diseno}, el preprocesamiento, los modelos y el diseño experimental; la sección~\ref{sec:resultados}, los resultados; y las secciones~\ref{sec:discusion} y~\ref{sec:conclusiones}, la discusión y las conclusiones.

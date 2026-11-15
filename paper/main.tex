@@ -1,0 +1,56 @@
+\documentclass[conference]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{textcomp,graphicx,booktabs,amsmath,float,url,cite}
+\graphicspath{{../}{./}} % figuras en ../figures (repositorio) o ./figures (Overleaf)
+\def\UrlBreaks{\do\/\do\-\do\.\do\_}
+\Urlmuskip=0mu plus 1mu
+
+\begin{document}
+
+\title{Predicción horaria de PM$_{2{,}5}$ en Santa Anita:\\ aporte de las variables de calendario}
+
+\author{
+\IEEEauthorblockN{Jobeth Alexander León Pantaleón}
+\IEEEauthorblockA{Sistemas de Información\\UTEC, Lima, Perú\\Jobeth.leon@utec.pe}
+\and
+\IEEEauthorblockN{Josué Yeremi Huamán Huamaní}
+\IEEEauthorblockA{Ciencias de la Computación\\UTEC, Lima, Perú\\josue.huaman.h@utec.edu.pe}
+\and
+\IEEEauthorblockN{Enrique Zheng Chan}
+\IEEEauthorblockA{Ciencias de la Computación\\UTEC, Lima, Perú\\enrique.zheng@utec.edu.pe}
+\and
+\IEEEauthorblockN{Requelmy Limaco Porras}
+\IEEEauthorblockA{Departamento de Ingeniería\\UTEC, Lima, Perú\\requelmy.limaco@utec.edu.pe}
+}
+
+\maketitle
+
+\begin{abstract}
+Este trabajo predice la concentración de PM$_{2{,}5}$ de la siguiente hora en la estación Santa Anita de SENAMHI (Lima Metropolitana) a partir de su historial reciente, y evalúa si las variables de calendario aportan por encima de ese historial. Se usan 19.391 mediciones horarias disponibles entre enero de 2022 y abril de 2024, una partición cronológica en entrenamiento, validación y prueba, ajuste de hiperparámetros por validación temporal y comprobaciones explícitas de fuga de información. Se comparan una línea base de persistencia, Ridge y Lasso, Random Forest y HistGradientBoosting. En prueba (enero--abril de 2024), los modelos de árboles reducen el MAE de la persistencia en 14--15~\% (2,41 y 2,43 frente a 2,83~\textmu g/m\textsuperscript{3}) y Ridge en 7~\%. El calendario mejora a los árboles entre 2 y 3~\% en validación, gracias a la hora del día, pero no a los modelos lineales, y el día de la semana no aporta. En el decil superior de concentraciones el error es de dos a cuatro veces el del resto y todos los modelos subestiman los valores sobre 50~\textmu g/m\textsuperscript{3}. El historial propio de la serie permite mejoras consistentes pero modestas a una hora, y sin variables meteorológicas no basta para anticipar los episodios altos. Código: \url{https://github.com/AIexander-lx/prediccion-pm25-santa-anita-}.
+\end{abstract}
+
+\begin{IEEEkeywords}
+PM2.5, calidad del aire, predicción horaria, Machine Learning, series temporales, Lima.
+\end{IEEEkeywords}
+
+\input{seccion_1_introduccion}
+
+\section{Datos y análisis exploratorio}
+\label{sec:eda}
+\input{seccion_3_fuente}
+\input{seccion_3_eda}
+
+\input{seccion_4_preprocesamiento}
+\input{seccion_5_baseline_lineales}
+\input{seccion_5_no_lineales}
+\input{seccion_6_diseno_experimental}
+\input{seccion_7_resultados}
+\input{seccion_8_discusion}
+\input{seccion_9_conclusiones}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}
