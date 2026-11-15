@@ -3,7 +3,7 @@
 % Cifras: data/processed/lineales_*.csv, no_lineales_*.csv y errores_*.csv.
 \section{Resultados y análisis}
 \label{sec:resultados}
-Se comparan cuatro modelos sobre las mismas filas: persistencia, Ridge sin calendario (el lineal elegido en la sección~5) y los representantes con calendario de Random Forest y HistGB. Las diferencias de MAE se acompañan de intervalos de confianza del 95~\% obtenidos por bootstrap de bloques móviles de 24 filas consecutivas (2000 réplicas), que conserva la autocorrelación de los errores; los bloques se forman sobre filas, por lo que un hueco de medición puede quedar dentro de un bloque.
+Se comparan cuatro modelos sobre las mismas filas: persistencia, Ridge sin calendario (el lineal elegido en la sección~\ref{sec:metodologia}) y los representantes con calendario de Random Forest y HistGB. Las diferencias de MAE se acompañan de intervalos de confianza del 95~\% obtenidos por bootstrap de bloques móviles de 24 filas consecutivas (2000 réplicas), que conserva la autocorrelación de los errores; los bloques se forman sobre filas, por lo que un hueco de medición puede quedar dentro de un bloque.
 
 \subsection{Comparación global}
 \label{sec:comparacion}
@@ -41,7 +41,7 @@ HistGB & 2,428 & \textbf{4,347} & \textbf{0,749} & 14,2~\% & $-0{,}40$ [$-0{,}52
 \label{fig:comparacion}
 \end{figure*}
 
-El MAE de prueba es menor que el de validación para todos los modelos, incluida la persistencia, y el $R^2$ también es menor. Ambos hechos se explican por el cambio de distribución descrito en la sección~3: enero--abril de 2024 tiene concentraciones más bajas y menos variables, de modo que los errores absolutos se reducen sin que el problema sea más fácil en términos relativos. Por la misma razón, el MAE de la validación cruzada interna (4,82 para Random Forest) es mayor: su primera ventana, en el invierno de 2022, tiene un MAE de 6,68, frente a 3,42 en la tercera.
+El MAE de prueba es menor que el de validación para todos los modelos, incluida la persistencia, y el $R^2$ también es menor. Ambos hechos se explican por el cambio de distribución descrito en la sección~\ref{sec:eda}: enero--abril de 2024 tiene concentraciones más bajas y menos variables, de modo que los errores absolutos se reducen sin que el problema sea más fácil en términos relativos. Por la misma razón, el MAE de la validación cruzada interna (4,82 para Random Forest) es mayor: su primera ventana, en el invierno de 2022, tiene un MAE de 6,68, frente a 3,42 en la tercera.
 
 \subsection{Aporte del calendario}
 \label{sec:calendario}
@@ -67,7 +67,7 @@ HistGB & 3,132 & 3,057 & $-2{,}4$~\% & $-0{,}07$ [$-0{,}12$; $-0{,}02$] \\
 
 \subsection{Importancia de variables}
 \label{sec:importancia}
-La importancia se mide como el aumento del MAE de validación al permutar una variable, con 20 repeticiones (Fig.~\ref{fig:importancia}); para la hora y el día se permuta la variable original, de modo que su seno y coseno, o sus indicadores, se alteran juntos. En ambos modelos domina la medición actual: permutarla eleva el MAE en 6,76 (Random Forest) y 6,97 µg/m³ (HistGB). Le siguen la hora (0,36 y 0,49) y el rezago de una hora (0,28 y 0,33); el resto aporta menos de 0,15. Este patrón coincide con la autocorrelación parcial de la sección~3, en la que la dependencia se concentra en los primeros rezagos.
+La importancia se mide como el aumento del MAE de validación al permutar una variable, con 20 repeticiones (Fig.~\ref{fig:importancia}); para la hora y el día se permuta la variable original, de modo que su seno y coseno, o sus indicadores, se alteran juntos. En ambos modelos domina la medición actual: permutarla eleva el MAE en 6,76 (Random Forest) y 6,97 µg/m³ (HistGB). Le siguen la hora (0,36 y 0,49) y el rezago de una hora (0,28 y 0,33); el resto aporta menos de 0,15. Este patrón coincide con la autocorrelación parcial de la sección~\ref{sec:eda}, en la que la dependencia se concentra en los primeros rezagos.
 
 \begin{figure}[t]
 \centering
@@ -129,8 +129,8 @@ La subestimación persistente es coherente con la limitación señalada en la se
 
 \subsection{Respuesta a las preguntas de investigación}
 \label{sec:respuestas}
-\textbf{P1.} Los modelos de árboles mejoran a la persistencia entre un 9,5~\% y un 11,6~\% en MAE en validación y alrededor de un 14~\% en prueba (unos 0,4 µg/m³ por hora), frente al 7~\% de Ridge. La mejora es estadísticamente consistente, pero pequeña en términos absolutos: la persistencia sigue siendo una referencia exigente a una hora.
+\textbf{PI1.} Los modelos de árboles mejoran a la persistencia entre un 9,5~\% y un 11,6~\% en MAE en validación y alrededor de un 14~\% en prueba (unos 0,4 µg/m³ por hora), frente al 7~\% de Ridge. La mejora es estadísticamente consistente, pero pequeña en términos absolutos: la persistencia sigue siendo una referencia exigente a una hora.
 
-\textbf{P2.} El calendario aporta solo en los modelos que pueden combinarlo con el historial. En los de árboles reduce el MAE de validación un 2--3~\%, y el aporte proviene de la hora pronosticada; el día de la semana no aporta en ningún modelo. En los lineales, el calendario empeora ligeramente el MAE.
+\textbf{PI2.} El calendario aporta solo en los modelos que pueden combinarlo con el historial. En los de árboles reduce el MAE de validación un 2--3~\%, y el aporte proviene de la hora pronosticada; el día de la semana no aporta en ningún modelo. En los lineales, el calendario empeora ligeramente el MAE.
 
-\textbf{P3.} Sí. En el decil superior el MAE es entre dos y cuatro veces el del resto, y por encima de 50 µg/m³ todos los modelos subestiman de forma sistemática. Los árboles conservan, e incluso amplían, su ventaja relativa sobre la persistencia en ese régimen; la de Ridge se reduce a un 2--5~\% y en validación no se distingue de cero. Ningún modelo resuelve la subestimación de los picos, que es la principal limitación para un uso sanitario del pronóstico.
+\textbf{PI3.} Sí. En el decil superior el MAE es entre dos y cuatro veces el del resto, y por encima de 50 µg/m³ todos los modelos subestiman de forma sistemática. Los árboles conservan, e incluso amplían, su ventaja relativa sobre la persistencia en ese régimen; la de Ridge se reduce a un 2--5~\% y en validación no se distingue de cero. Ningún modelo resuelve la subestimación de los picos, que es la principal limitación para un uso sanitario del pronóstico.

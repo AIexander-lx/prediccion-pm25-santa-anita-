@@ -1,229 +1,125 @@
-# Predicción de PM2.5 en Santa Anita
+# Predicción horaria de PM2.5 en Santa Anita
 
-Proyecto final del curso de Machine Learning. El objetivo es predecir la concentración de PM2.5 de la siguiente hora en la estación Santa Anita de SENAMHI, a partir de su historial reciente, y evaluar si las variables de calendario aportan por encima de ese historial.
+Proyecto final del curso de Machine Learning (UTEC). Predice la concentración de PM2.5 de la **siguiente hora** en la estación Santa Anita de SENAMHI (Lima Metropolitana) a partir de su historial reciente, y evalúa si las variables de calendario (hora del día y día de la semana) aportan por encima de ese historial.
 
-La estación pertenece a la zona este de la red de monitoreo de Lima Metropolitana. Sobre los días con cobertura suficiente del periodo analizado, el 93 % supera la guía diaria de calidad del aire de la OMS (15 µg/m³) y el 10,3 % el Estándar de Calidad Ambiental peruano (50 µg/m³), lo que da sentido a disponer de un pronóstico a corto plazo.
+- **Tarea:** regresión supervisada, `PM2.5(t+1)` a partir de información hasta `t`.
+- **Datos:** 19.391 mediciones horarias disponibles de 20.424 horas esperadas (enero de 2022 a abril de 2024).
+- **Evaluación:** partición cronológica (entrenamiento, validación, prueba), validación de origen expansivo, comprobaciones explícitas de fuga de información.
+- **Modelos:** persistencia (baseline), Ridge, Lasso, Random Forest y HistGradientBoosting.
 
-## Preguntas de investigación
-
-1. ¿Cuánto mejora un modelo de aprendizaje automático sobre la persistencia al usar la medición actual como pronóstico de la siguiente hora en un horizonte de una hora?
-2. ¿Aportan las variables de calendario (hora del día y día de la semana) por encima de lo que ya contiene el historial reciente de la propia serie?
-3. ¿Se degrada el desempeño en el régimen de concentraciones altas, que es el de mayor relevancia sanitaria?
-
-La primera entrega no las responde: reúne la evidencia descriptiva necesaria para plantearlas y para diseñar el experimento que las responderá.
+Paper: [`paper/`](paper/) (plantilla IEEE, en español). Plan interno del equipo: [`docs/plan_p2.md`](docs/plan_p2.md).
 
 ## Integrantes
 
-- Zheng Chan, Enrique
-- Limaco Porras, Requelmy
-- León Pantaleón, Jobeth Alexander
-- Huamán Huamaní, Josué Yeremi
-
-Repositorio del proyecto: https://github.com/AIexander-lx/prediccion-pm25-santa-anita-
-
-## Estado
-
-EDA de la primera entrega desarrollado en la notebook, con tablas y gráficos exportados. El modelado corresponde a la segunda entrega; el reparto de roles y tareas está en la sección "Entrega 2 (P2)". Las concentraciones están en µg/m³, unidad confirmada con el informe de vigilancia de la calidad del aire de SENAMHI para el Área Metropolitana de Lima y Callao (2021).
-
-## Entrega 2 (P2): roles y tareas
-
-Plan de trabajo del equipo para la segunda etapa del proyecto final (modelado, evaluación y discusión). La primera entrega quedó congelada en el tag `p1-entrega`.
-
-### La entrega
-
-| | |
+| Integrante | Rol en P2 |
 |---|---|
-| **Etapa** | P2: modelado, evaluación y discusión |
-| **Semana de entrega** | **Semana 15 del curso** (la guía actualizada la adelantó desde la semana 16) |
-| **Fecha exacta** | _(completar con la fecha de Canvas)_ |
-| **Exposición** | Máximo **10 minutos**, seguidos de preguntas, durante la clase de laboratorio de esa semana |
-| **Rúbrica** | En Canvas |
+| León Pantaleón, Jobeth Alexander | Datos y características |
+| Huamán Huamaní, Josué Yeremi | Baseline y modelos lineales |
+| Zheng Chan, Enrique | Modelos no lineales y análisis de errores |
+| Limaco Porras, Requelmy | Reporte, repositorio y presentación |
 
-#### Artefactos (los tres)
+## Preguntas de investigación y respuesta resumida
 
-1. **Paper en PDF**, con el template IEEE de conferencias, **máximo 12 páginas**, en español o en inglés. Incluye todo el contenido de P1 más lo nuevo de P2.
-2. **Repositorio público** de código, organizado y reproducible. Su calidad y organización se evalúan.
-3. **Presentación** en PDF. Participan todos los integrantes y solo uno comparte pantalla.
+1. **PI1. ¿Cuánto mejora un modelo de ML sobre la persistencia?** En prueba, Random Forest y HistGB reducen el MAE entre 14 y 15 %; Ridge, 7 %.
+2. **PI2. ¿Aporta el calendario?** Solo a los modelos de árboles (2 a 3 % en validación), por medio de la hora; el día de la semana no aporta.
+3. **PI3. ¿Se degrada el desempeño con concentraciones altas?** Sí: en el decil superior el MAE es de 2 a 4 veces el del resto y todos los modelos subestiman por encima de 50 µg/m³.
 
-#### Contenido nuevo de P2 (además de lo de P1)
+## Resultados principales
 
-- Preprocesamiento e ingeniería de características.
-- Un **baseline** definido.
-- Implementación y comparación de **al menos dos modelos** de ML.
-- Diseño experimental, validación y ajuste de hiperparámetros.
-- Evaluación con métricas apropiadas.
-- Análisis e interpretación de resultados y errores.
-- Discusión, limitaciones, consideraciones éticas y conclusiones.
+MAE en µg/m³ (menor es mejor). Mejora: reducción respecto a la persistencia del mismo bloque.
 
-#### Estructura del paper
-
-| # | Sección | Etapa |
-|---|---|---|
-| 1 | Resumen | P1 y P2 |
-| 2 | Introducción y formulación del problema | P1 y P2 |
-| 3 | Datos y análisis exploratorio (EDA) | P1 y P2 |
-| 4 | Preprocesamiento e ingeniería de características | P2 |
-| 5 | Metodología y modelos | P2 |
-| 6 | Diseño experimental y evaluación | P2 |
-| 7 | Resultados y análisis | P2 |
-| 8 | Discusión y limitaciones | P2 |
-| 9 | Conclusiones | P2 |
-| 10 | Referencias | P1 y P2 |
-
-Se valora especialmente la capacidad de **justificar las decisiones** y de demostrar comprensión de los conceptos, además del desempeño de los modelos. Todos deben poder explicar las decisiones metodológicas.
-
-### División del trabajo por roles
-
-Cuatro roles de carga similar. Cada rol tiene su código, sus secciones del paper y sus figuras o tablas, y todos aportan a la presentación.
-
-> **Cada integrante se asigna un rol** escribiendo su nombre en la columna "Responsable".
-
-| Rol | Responsable | Responsabilidades | Secciones del paper |
+| Modelo | MAE validación | MAE prueba | Mejora en prueba |
 |---|---|---|---|
-| **1. Datos y características** | Alexander | Construir el conjunto supervisado (rezagos, medias móviles solo con el pasado, hora y día); manejar faltantes y ventanas incompletas sin fuga; aplicar la partición cronológica; escalado dentro del pipeline; actualizar el EDA que pasa al paper. | 3 (actualizada) y 4 |
-| **2. Baseline y modelos lineales** |Josue| Baseline de persistencia; Ridge y Lasso; validación temporal y búsqueda de hiperparámetros; definir y justificar las métricas (MAE, RMSE, R², MSE); protocolo experimental. | 5 (baseline y lineales) y 6 |
-| **3. Modelos no lineales y análisis de errores** | Enrique | Random Forest y, si se decide, boosting; ajuste de hiperparámetros; comparación con el baseline y los lineales; importancia de variables; análisis de errores y del régimen de concentraciones altas; respuesta a las tres preguntas de investigación. | 5 (no lineales) y 7 |
-| **4. Reporte, repositorio y presentación** | _(asignar)_ | Armar el paper en IEEE (hasta 12 páginas); redactar resumen, introducción, discusión, limitaciones, ética, conclusiones y referencias; mantener el repo reproducible (README, dependencias, notebooks); armar la presentación de 10 minutos y coordinar el ensayo. | 1, 2, 8, 9 y 10 |
+| Persistencia (baseline) | 3,378 | 2,829 | n/a |
+| Ridge (sin calendario) | 3,141 | 2,626 | 7,2 % |
+| Random Forest (con calendario) | 2,985 | 2,413 | 14,7 % |
+| HistGB (con calendario) | 3,057 | 2,428 | 14,2 % |
 
-#### Responsabilidades compartidas
+Tablas completas, intervalos de confianza y análisis de errores: sección de resultados del paper y `data/processed/*.csv`. Las concentraciones bajan entre bloques (media de la respuesta de 32,9 en entrenamiento a 17,8 en prueba), por lo que los errores absolutos no son comparables entre bloques.
 
-- Revisar el trabajo de los demás antes de integrar a `main`.
-- Todos participan en la presentación y responden preguntas sobre datos, modelos, evaluación y decisiones.
-- Probar que el repositorio se ejecuta desde cero siguiendo el README.
+## Estructura del repositorio
 
-### Tareas por rol
-
-Marca cada tarea con `[x]` cuando esté lista y sube el cambio. Cada rol trabaja en su propia rama (por ejemplo `p2-rol1-datos`) y se integra a `main` con un pull request revisado por otro integrante.
-
-#### Rol 1: Datos y características
-- [x] Definir el conjunto supervisado: entrada hasta `t`, etiqueta `PM2.5(t+1)`.
-- [x] Construir los rezagos (1, 3, 6, 12 y 24 horas) y las medias móviles usando solo información pasada.
-- [x] Construir las variables de calendario (hora del día y día de la semana) y decidir su codificación.
-- [x] Decidir qué hacer con faltantes y ventanas incompletas, sin imputar con ceros ni usar información futura.
-- [x] Aplicar la partición cronológica (entrenamiento, validación, prueba) y guardarla.
-- [x] Implementar el preprocesamiento (escalado, etc.) ajustado solo con entrenamiento, dentro de un pipeline.
-- [x] Verificar la ausencia de fuga de información con una comprobación explícita.
-- [x] Actualizar el EDA para el paper (sección 3) y redactar la sección 4.
-
-#### Rol 2: Baseline y modelos lineales
-- [x] Implementar el baseline de persistencia y calcular sus métricas en validación.
-- [x] Definir y justificar las métricas (MAE, RMSE, MSE, R²) y fijar la forma de comparar con el baseline.
-- [x] Implementar Ridge y Lasso con los rezagos y las variables de calendario.
-- [x] Ajustar `alpha` con validación temporal (no aleatoria) y registrar la búsqueda.
-- [x] Comparar con y sin variables de calendario para la pregunta de investigación 2.
-- [x] Interpretar los coeficientes (cuáles quedan en cero en Lasso).
-- [x] Redactar las secciones 5 (baseline y lineales) y 6.
-
-#### Rol 3: Modelos no lineales y análisis de errores
-- [x] Implementar Random Forest sobre el mismo conjunto de características.
-- [x] Ajustar hiperparámetros con validación temporal (por ejemplo `n_estimators`, `max_features`, `min_samples_leaf`).
-- [x] Decidir si se prueba un segundo modelo no lineal (por ejemplo boosting) y comparar.
-- [x] Calcular la importancia de variables e interpretarla (incluyendo sus limitaciones).
-- [x] Analizar los errores: dónde falla el modelo, por hora, mes y nivel de concentración.
-- [x] Evaluar el desempeño en el régimen de concentraciones altas (pregunta 3).
-- [x] Redactar las secciones 5 (no lineales) y 7, con tablas y figuras comparativas.
-
-#### Rol 4: Reporte, repositorio y presentación
-- [ ] Configurar el paper con el template IEEE (LaTeX o Word) y respetar el límite de 12 páginas.
-- [ ] Actualizar las secciones 1 y 2 con los resultados de P2.
-- [ ] Integrar las secciones 3 a 7 de los demás roles y unificar estilo, notación y referencias.
-- [ ] Redactar la discusión, limitaciones, consideraciones éticas, conclusiones y referencias (secciones 8 a 10).
-- [ ] Mantener el repositorio: README actualizado, dependencias, instrucciones de ejecución y notebooks ordenados.
-- [ ] Verificar que los experimentos se reproducen desde cero.
-- [ ] Armar la presentación (10 minutos) y exportarla a PDF.
-- [ ] Organizar un ensayo en el que todos hablen y practiquen las preguntas posibles.
-- [ ] Entregar el paper, el repositorio y la presentación en Canvas.
-
-#### Tareas de todos
-- [ ] Asignarse un rol en la tabla de arriba.
-- [ ] Confirmar la fecha exacta de entrega y la fecha de la exposición.
-- [ ] Hacer una última revisión conjunta del paper antes de entregar.
-- [ ] Preparar respuestas sobre datos, modelos, evaluación y decisiones para la ronda de preguntas.
-
-## Organización
-
-- `data/raw/`: CSV de Santa Anita, conservado sin modificaciones.
-- `data/processed/`: tablas de cobertura, calidad, estadísticas, patrones temporales y decisiones de diseño experimental.
-- `notebooks/01_eda.ipynb`: EDA ejecutado con resultados e interpretaciones.
-- `figures/`: gráficos exportados para el informe.
-- `pyproject.toml`: dependencias declaradas del proyecto.
-- `uv.lock`: versiones exactas de todas las dependencias.
-- `requirements.txt`: exportación del bloqueo de versiones, para quien use pip.
+```
+.
+├── data/
+│   ├── raw/            CSV de Santa Anita, sin modificar
+│   └── processed/      tablas del EDA, conjunto supervisado y resultados (CSV)
+├── notebooks/
+│   └── 01_eda.ipynb    análisis exploratorio (P1)
+├── scripts/            pipeline de P2, se ejecuta en orden (01 a 06)
+├── src/pm25/           funciones de construcción de características
+├── figures/            figuras en PNG (300 dpi) y PDF vectorial
+├── paper/              fuentes LaTeX del artículo (main.tex, secciones, refs.bib)
+├── docs/               plan de trabajo de P2
+├── pyproject.toml      dependencias declaradas
+├── uv.lock             versiones exactas
+└── requirements.txt    exportación del bloqueo, para quien use pip
+```
 
 ## Datos
 
-Fuente: SENAMHI, conjunto [Monitoreo de los contaminantes del aire en Lima Metropolitana](https://www.datosabiertos.gob.pe/dataset/monitoreo-de-los-contaminantes-del-aire-en-lima-metropolitana-servicio-nacional-de), publicado en la Plataforma Nacional de Datos Abiertos.
+Fuente: SENAMHI, conjunto [Monitoreo de los contaminantes del aire en Lima Metropolitana](https://www.datosabiertos.gob.pe/dataset/monitoreo-de-los-contaminantes-del-aire-en-lima-metropolitana-servicio-nacional-de), Plataforma Nacional de Datos Abiertos. Licencia del proveedor: Open Data Commons Attribution License (aplica a los datos, no al código).
 
-Licencia indicada por el proveedor: Open Data Commons Attribution License. Esta atribución corresponde a los datos; no establece una licencia para el código del proyecto.
+`data/raw/santa_anita_2015_2024.csv` es el CSV filtrado por estación (82.542 registros, 15 columnas, enero de 2015 a mayo de 2024). El análisis usa del 1 de enero de 2022 al 30 de abril de 2024. Las concentraciones están en µg/m³, unidad confirmada con el informe de vigilancia de SENAMHI para Lima y Callao (2021). Para obtener el archivo de nuevo, descargar el conjunto desde el enlace anterior y filtrar por la estación Santa Anita.
 
-El archivo `data/raw/santa_anita_2015_2024.csv` es una copia sin cambios del CSV filtrado por estación proporcionado por el equipo. Contiene registros desde enero de 2015 hasta mayo de 2024. La notebook selecciona del 1 de enero de 2022 al 30 de abril de 2024, conservando el archivo de entrada y las horas sin medición.
+## Instalación
 
-## Preparación del entorno
+El proyecto fija sus dependencias con [uv](https://docs.astral.sh/uv/). La versión de Python está en `.python-version`.
 
-El proyecto fija sus dependencias con [uv](https://docs.astral.sh/uv/). El archivo `uv.lock` registra la versión exacta de cada paquete, resuelta para Windows, macOS y Linux, de modo que cualquier persona obtiene el mismo entorno con el que se produjeron las tablas y figuras de este repositorio.
-
-Instalar uv una sola vez, desde PowerShell:
-
-```powershell
+```bash
+# instalar uv una vez (Windows, PowerShell)
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
 
-Después, desde la carpeta del repositorio:
-
-```powershell
+# desde la raíz del repositorio
 uv sync --frozen
-uv run jupyter lab
 ```
 
-`uv sync --frozen` crea el entorno virtual en `.venv/` e instala exactamente lo que indica `uv.lock`, sin resolver versiones nuevas. No hace falta crear ni activar el entorno a mano. Para incorporar una dependencia se usa `uv add <paquete>`, que actualiza `pyproject.toml` y `uv.lock`; ambos archivos deben quedar registrados en el control de versiones.
+`uv sync --frozen` crea `.venv/` con las versiones exactas de `uv.lock`. Alternativa con pip (mismas versiones de paquetes, sin fijar la de Python):
 
-Quien prefiera no instalar uv puede reproducir el entorno con pip. Este camino instala las mismas versiones de los paquetes, pero no fija la versión de Python:
-
-```powershell
+```bash
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+# Windows: .\.venv\Scripts\Activate.ps1   |   Linux/macOS: source .venv/bin/activate
 python -m pip install -r requirements.txt
-jupyter lab
 ```
 
-El archivo `requirements.txt` se genera a partir de `uv.lock` y no debe editarse a mano:
+## Cómo reproducir los resultados
 
-```powershell
-uv export --no-hashes --no-dev --no-emit-project -o requirements.txt
+Desde la raíz, en este orden:
+
+```bash
+uv run jupyter lab                                  # abrir notebooks/01_eda.ipynb y ejecutar todo (EDA, < 1 min)
+uv run python scripts/01_construir_dataset.py       # conjunto supervisado y particiones
+uv run python scripts/02_verificar_fuga.py          # 12 comprobaciones de fuga de información
+uv run python scripts/03_figura_particiones.py      # figura 14
+uv run python scripts/04_modelos_lineales.py        # persistencia, Ridge y Lasso
+uv run python scripts/05_modelos_no_lineales.py     # Random Forest y HistGB (~15 min con 2 núcleos)
+uv run python scripts/06_analisis_errores.py        # errores por hora, mes y nivel; figuras 15 a 18
 ```
 
-## Reproducir el análisis
+| Script | Qué hace | Salida |
+|---|---|---|
+| `01_construir_dataset.py` | Rezagos, medias móviles y calendario solo con el pasado; descarta filas con huecos; asigna bloques cronológicos | `data/processed/supervisado_*.csv` |
+| `02_verificar_fuga.py` | Pruebas explícitas de ausencia de fuga, con un control negativo | `verificacion_fuga.csv` |
+| `03_figura_particiones.py` | Figura de la partición cronológica | `figures/14_*` |
+| `04_modelos_lineales.py` | Baseline y modelos lineales; búsqueda de `alpha` con validación temporal | `lineales_*.csv` |
+| `05_modelos_no_lineales.py` | Árboles con y sin calendario, importancia por permutación | `no_lineales_*.csv` |
+| `06_analisis_errores.py` | No reentrena; desagrega errores y calcula intervalos por bootstrap de bloques | `errores_*.csv`, `figures/15_*` a `18_*` |
 
-### Experimento de baseline y modelos lineales (P2)
+El resultado esperado son los mismos CSV que ya están en `data/processed/` y las figuras de `figures/`. Los modelos usan semilla fija.
 
-Tras preparar el entorno, ejecutar desde la raíz:
+## Compilar el paper
 
-```powershell
-uv run python scripts/01_construir_dataset.py
-uv run python scripts/02_verificar_fuga.py
-uv run python scripts/04_modelos_lineales.py
+Con una distribución de LaTeX que incluya `IEEEtran` (por ejemplo TeX Live) o subiendo `paper/` y `figures/` a Overleaf:
+
+```bash
+cd paper
+pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```
 
-El último script evalúa persistencia, Ridge y Lasso en las mismas filas. Ajusta `alpha` por MAE mediante tres ventanas de validación temporal expansivas dentro de entrenamiento; el escalador se ajusta dentro de cada ventana. Compara las variantes con y sin calendario en validación y elige el modelo lineal con menor MAE; evalúa ese modelo y la persistencia en prueba sin reajustar con validación. Por tanto, prueba no debe usarse para volver a seleccionar modelos. Los resultados y predicciones se guardan en `data/processed/lineales_*.csv`; el detalle del protocolo y la interpretación están en `paper/seccion_5_baseline_lineales.tex` y `paper/seccion_6_diseno_experimental.tex`. El uso previo de todo el periodo en el EDA limita la independencia estricta de prueba, como se declara en la sección 6.
+## Limitaciones
 
-### Experimento de modelos no lineales y análisis de errores (P2)
+Una sola estación y 28 meses; concentraciones que bajan entre entrenamiento y prueba; EDA que examinó todo el periodo, incluida la prueba (los cortes se fijaron antes de entrenar y la selección usó solo validación); sin variables meteorológicas. Detalle en la sección de discusión del paper.
 
-Después de los tres scripts anteriores:
+## Licencia y atribución
 
-```powershell
-uv run python scripts/05_modelos_no_lineales.py
-uv run python scripts/06_analisis_errores.py
-```
-
-`05_modelos_no_lineales.py` ajusta Random Forest y HistGradientBoosting (scikit-learn) con y sin calendario, sobre las mismas características, los mismos tres cortes de validación temporal y el mismo criterio (MAE) que el script 04; comprueba que los cortes coinciden con `lineales_folds.csv`. En cada familia elige la variante con menor MAE de validación y la evalúa en prueba sin reajustar. Calcula además la importancia por permutación en validación. Tarda unos 15 minutos con dos núcleos y guarda `data/processed/no_lineales_*.csv`.
-
-`06_analisis_errores.py` no reentrena: lee las predicciones de los scripts 04 y 05, verifica que todos los modelos se evalúan en las mismas filas y desagrega los errores por hora, mes y nivel de concentración. Evalúa el régimen alto con dos definiciones (umbral fijo igual al percentil 90 de la respuesta en entrenamiento y decil superior de cada bloque) e incluye intervalos de confianza por bootstrap de bloques móviles de 24 filas. Guarda `data/processed/errores_*.csv` y las figuras 15 a 18. La redacción está en `paper/seccion_5_no_lineales.tex` y `paper/seccion_7_resultados.tex`.
-
-### Análisis exploratorio (P1)
-
-Con el entorno listo, abrir `notebooks/01_eda.ipynb` y ejecutar todas las celdas en orden. Las rutas funcionan desde la raíz del repositorio o desde `notebooks/`. La ejecución tarda menos de un minuto y actualiza treinta tablas en `data/processed/` y trece figuras en `figures/`, cada una en PNG de 300 dpi y PDF vectorial. La primera celda registra las versiones utilizadas y fija la semilla global; la última verifica por hash que el CSV de entrada no fue modificado.
-
-El EDA no imputa faltantes, no elimina valores extremos y no entrena modelos. Se exploró todo el periodo seleccionado; esa exposición se declara en la sección 9 de la notebook, que además fija los cortes de las particiones y el protocolo de evaluación de la segunda etapa en `data/processed/particiones_propuestas.csv`.
-
-Las figuras complementarias describen la disponibilidad, los promedios mensuales y la correlación simultánea de PM10, PM2.5 y NO2. El objetivo predictivo sigue siendo PM2.5 una hora después: la correlación entre contaminantes no se interpreta como evidencia de desempeño predictivo. Consultar `figures/README.md` para elegir las figuras y sus pies de imagen.
-
+Datos: SENAMHI, Open Data Commons Attribution License. El código no tiene licencia declarada; si se desea reutilizar, agregar un archivo `LICENSE`.

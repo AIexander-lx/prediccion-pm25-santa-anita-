@@ -1,0 +1,26 @@
+% Sección 8 de la guía: discusión, limitaciones y ética. Rol 4.
+\section{Discusión y limitaciones}
+\label{sec:discusion}
+
+\subsection{Interpretación de los resultados}
+\textbf{Por qué la persistencia es una referencia exigente.} Con una correlación de 0,912 entre horas consecutivas (sección~\ref{sec:eda}) y una dependencia parcial concentrada en el primer rezago, gran parte de la señal ya está en el valor actual. Eso explica que la medición actual domine la importancia de variables y que las mejoras sean modestas: 0,2 a 0,4~\textmu g/m\textsuperscript{3} por hora sobre un MAE de la persistencia de 2,8 a 3,4.
+
+\textbf{Por qué los árboles superan a Ridge.} Ridge combina las variables de forma aditiva, mientras que los árboles aprenden umbrales e interacciones sin especificarlas. Las mayores ganancias frente a Ridge aparecen entre las 17 y las 21~h (sección~\ref{sec:errores}), cuando la concentración cambia de tendencia a diario, lo que es coherente con una interacción entre la hora y el nivel reciente. Es una interpretación compatible con los datos, no una prueba: no se contrastó con un modelo que incluya esa interacción de forma explícita. Random Forest y HistGB quedan prácticamente empatados en prueba, por lo que el estudio no permite afirmar que uno sea preferible, y no hay evidencia de que un modelo más complejo sea necesariamente mejor, en línea con Solis Teran et al.~\cite{solis2025}.
+
+\textbf{Calendario.} La hora del día mejora a los árboles y no a los lineales, y el día de la semana no aporta, algo coherente con que las medianas semanales del EDA varíen solo entre 23,6 y 25,7~\textmu g/m\textsuperscript{3}. Que el calendario empeore ligeramente a Ridge (alrededor de 2~\%) puede deberse a que la codificación con seno y coseno no representa un patrón diario no senoidal y añade variables sin ganancia; no lo comprobamos con otra codificación.
+
+\textbf{Episodios altos.} Todos los modelos subestiman por encima de 50~\textmu g/m\textsuperscript{3}, de acuerdo con lo reportado en estaciones de Lima~\cite{hoyos2021}. Los árboles promedian valores de las hojas y, sin variables meteorológicas ni de emisiones, el historial no anuncia el inicio de un episodio. Parte del sesgo es mecánica al agrupar por el valor observado (sección~\ref{sec:regimen-alto}).
+
+\subsection{Limitaciones}
+\begin{itemize}
+\item \textbf{Alcance.} Una sola estación y 28 meses; no hay evidencia sobre otras zonas de Lima ni sobre otros años. Solo se pronostica a una hora.
+\item \textbf{Cambio de distribución.} La media de la respuesta baja de 32,9 en entrenamiento a 17,8~\textmu g/m\textsuperscript{3} en prueba, y la prueba cubre solo enero a abril. Los errores absolutos no son comparables entre bloques; por eso se reporta la mejora relativa a la persistencia de cada bloque.
+\item \textbf{Independencia de la prueba.} El EDA examinó todo el periodo, incluida la prueba. Los cortes se fijaron antes de entrenar y la selección usó solo validación, pero la independencia no es estricta.
+\item \textbf{Faltantes.} No se imputan valores, por lo que se descartan 10,5~\% de los instantes y no hay pronóstico tras una interrupción; la imputación con media o mediana puede producir errores grandes~\cite{hua2024}. Las causas de los huecos se desconocen, y si coincidieran con episodios altos los descriptivos los subestimarían.
+\item \textbf{Muestra en el régimen alto.} Con el umbral fijo solo hay 16 horas en validación y 17 en prueba; esas cifras son indicativas.
+\item \textbf{Diseño de la búsqueda.} El $\alpha$ de Ridge está en el límite inferior de la malla; Lasso no se evaluó en prueba; y se usó una semilla fija, de modo que los intervalos reflejan la variación temporal de la muestra y no la del entrenamiento.
+\item \textbf{Variables.} Sin temperatura, humedad ni viento, el dataset limita lo que cualquier modelo puede anticipar.
+\end{itemize}
+
+\subsection{Consideraciones éticas y de uso}
+Los datos son mediciones ambientales abiertas, sin información personal, y se usan conforme a su licencia con atribución a SENAMHI. El riesgo principal es el uso del pronóstico: como todos los modelos subestiman los picos, un valor bajo no debe tomarse como garantía de aire limpio y el modelo no debe ser la única fuente de una alerta sanitaria. Tampoco debe extrapolarse a otros distritos, donde población y fuentes de emisión difieren. Por último, la elección del periodo por su disponibilidad y el hecho de que la estación estuviera fuera de servicio por largos tramos pueden ocultar justamente los episodios de peor calidad del aire, lo que conviene declarar al presentar los resultados. Para facilitar la verificación, todas las cifras se reproducen con los scripts del repositorio.
